@@ -1,15 +1,12 @@
 package eventmanagemnetsystemgui;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
-
-public class EventManagementSystemGUI extends JFrame {
+public class EventManagementSystemGUI extends JFrame{
     private EventManagementSystem system;
     private JTextArea textArea;
-
-    public EventManagementSystemGUI() {
+    public EventManagementSystemGUI(){
         system = new EventManagementSystem();
         textArea = new JTextArea(15, 30);
         textArea.setEditable(false);
@@ -44,64 +41,64 @@ public class EventManagementSystemGUI extends JFrame {
         add(new JScrollPane(textArea), BorderLayout.CENTER);
 
         // Action Listeners for the buttons
-        addEventButton.addActionListener(new ActionListener() {
+        addEventButton.addActionListener(new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e){
                 addEvent();
             }
         });
 
-        searchEventButton.addActionListener(new ActionListener() {
+        searchEventButton.addActionListener(new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e){
                 searchEvent();
             }
         });
 
-        displayAllEventsButton.addActionListener(new ActionListener() {
+        displayAllEventsButton.addActionListener(new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e){
                 displayAllEvents();
             }
         });
 
-        removeEventButton.addActionListener(new ActionListener() {
+        removeEventButton.addActionListener(new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e){
                 removeEvent();
             }
         });
 
-        registerParticipantButton.addActionListener(new ActionListener() {
+        registerParticipantButton.addActionListener(new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e){
                 registerParticipant();
             }
         });
 
-        removeParticipantButton.addActionListener(new ActionListener() {
+        removeParticipantButton.addActionListener(new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e){
                 removeParticipant();
             }
         });
 
         viewParticipantsButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e){
                 viewParticipants();
             }
         });
 
-        searchParticipantButton.addActionListener(new ActionListener() {
+        searchParticipantButton.addActionListener(new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e){
                 searchParticipant();
             }
         });
     }
 
-    private void addEvent() {
+    private void addEvent(){
         // Collect event details from the user
         String eventName = JOptionPane.showInputDialog("Enter Event Name:");
         String eventLocation = JOptionPane.showInputDialog("Enter Event Location:");
@@ -116,24 +113,24 @@ public class EventManagementSystemGUI extends JFrame {
         JOptionPane.showMessageDialog(this, "Event added successfully.");
     }
 
-    private void searchEvent() {
+    private void searchEvent(){
         int eventID = Integer.parseInt(JOptionPane.showInputDialog("Enter Event ID to Search:"));
         Event event = system.searchEvent(eventID);
-        if (event != null) {
+        if(event != null){
             textArea.setText(event.toString());
-        } else {
+        }else{
             JOptionPane.showMessageDialog(this, "Event not found.");
         }
     }
 
-    private void displayAllEvents() {
+    private void displayAllEvents(){
         List<Event> activeEvents = system.getActiveEvents();
         StringBuilder eventDetails = new StringBuilder("Active Events:\n");
 
-        if (activeEvents.isEmpty()) {
+        if(activeEvents.isEmpty()){
             eventDetails.append("No active events found.");
-        } else {
-            for (Event event : activeEvents) {
+        }else{
+            for (Event event : activeEvents){
                 eventDetails.append(event.toString()).append("\n");
             }
         }
@@ -141,17 +138,17 @@ public class EventManagementSystemGUI extends JFrame {
         textArea.setText(eventDetails.toString());
     }
 
-    private void removeEvent() {
+    private void removeEvent(){
         int eventID = Integer.parseInt(JOptionPane.showInputDialog("Enter Event ID to Remove:"));
         system.removeEvent(eventID);
         JOptionPane.showMessageDialog(this, "Event removed successfully.");
     }
 
-    private void registerParticipant() {
+    private void registerParticipant(){
         int eventID = Integer.parseInt(JOptionPane.showInputDialog("Enter Event ID to Register Participant:"));
         Event event = system.searchEvent(eventID);
 
-        if (event != null) {
+        if (event != null){
             int participantID = Integer.parseInt(JOptionPane.showInputDialog("Enter Participant ID:"));
             String participantName = JOptionPane.showInputDialog("Enter Participant Name:");
 
@@ -164,57 +161,57 @@ public class EventManagementSystemGUI extends JFrame {
         }
     }
 
-    private void removeParticipant() {
+    private void removeParticipant(){
         int eventID = Integer.parseInt(JOptionPane.showInputDialog("Enter Event ID to Remove Participant:"));
         Event event = system.searchEvent(eventID);
 
-        if (event != null) {
+        if(event != null){
             int participantID = Integer.parseInt(JOptionPane.showInputDialog("Enter Participant ID to Remove:"));
             boolean removed = system.removeParticipant(participantID, event);
 
-            if (removed) {
+            if(removed){
                 JOptionPane.showMessageDialog(this, "Participant removed successfully.");
-            } else {
+            }else{
                 JOptionPane.showMessageDialog(this, "Participant not found.");
             }
-        } else {
+        }else{
             JOptionPane.showMessageDialog(this, "Event not found.");
         }
     }
 
-    private void viewParticipants() {
+    private void viewParticipants(){
         int eventID = Integer.parseInt(JOptionPane.showInputDialog("Enter Event ID to View Participants:"));
         Event event = system.searchEvent(eventID);
 
-        if (event != null) {
+        if(event != null){
             StringBuilder participantDetails = new StringBuilder("Participants for Event ID " + eventID + ":\n");
 
-            if (event.getParticipants().isEmpty()) {
+            if(event.getParticipants().isEmpty()){
                 participantDetails.append("No participants registered.");
-            } else {
-                for (Participant participant : event.getParticipants()) {
+            }else{
+                for (Participant participant : event.getParticipants()){
                     participantDetails.append(participant.toString()).append("\n");
                 }
             }
 
             textArea.setText(participantDetails.toString());
-        } else {
+        }else{
             JOptionPane.showMessageDialog(this, "Event not found.");
         }
     }
 
-    private void searchParticipant() {
+    private void searchParticipant(){
         int participantID = Integer.parseInt(JOptionPane.showInputDialog("Enter Participant ID to Search:"));
         Participant participant = system.searchParticipant(participantID);
 
-        if (participant != null) {
+        if(participant != null){
             textArea.setText(participant.toString());
-        } else {
+        }else{
             JOptionPane.showMessageDialog(this, "Participant not found.");
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         EventManagementSystemGUI gui = new EventManagementSystemGUI();
         gui.setVisible(true);
     }
