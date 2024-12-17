@@ -1,6 +1,6 @@
 package eventmanagemnetsystemgui;
-public class Main {
-    public static void main(String[] args) {
+public class Main{
+    public static void main(String[] args){
         EventManagementSystem system = new EventManagementSystem();
 
         // Add Events
@@ -13,12 +13,8 @@ public class Main {
 
         // Search for an Event
         Event event = system.searchEvent(1);
-        if (event != null) {
+        if(event != null){
             System.out.println("\nFound Event: " + event);
         }
-
-        // Register Participants
-//        system.registerParticipant(new Participant(101, participantName, participantContact));
-//        system.registerParticipant(new Participant(102, participantName, participantContact));
     }
 }
